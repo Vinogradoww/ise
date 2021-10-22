@@ -1,0 +1,47 @@
+работа футбольной кассы
+продавать и возвращать билеты на матчи через несколько одновременно работающих касс
+
+
+@startuml
+database ticket_database as DB
+collections ticket_offices as office
+actor customer as customer
+
+group Покупка билета
+  customer -> office : запрос на покупку билета  
+  office -> DB : запрос билета
+  DB --> office : билет при наличии
+  office --> customer : продажа билета в случае наличия
+end
+
+group Возврат билета
+  customer -> office : возврат билета
+  office -> DB : возврат билета
+  office-> customer: возврат денег
+end
+@enduml
+
+
+
+
+#v2
+@startuml
+database ticket_database as DB
+collections ticket_offices as office
+actor customer as customer
+
+group Покупка билета
+  customer -> office : запрос на покупку билета  
+  office -> DB : запрос билета
+  DB --> office : билет при наличии
+  office --> customer : выдача билета при наличии
+  customer --> office : оплата билета в случае покупки
+  office --> DB : состояние билета - продан
+end
+
+group Возврат билета
+  customer -> office : возврат билета
+  office -> DB : возврат билета
+  office-> customer: возврат денег
+end
+@enduml
