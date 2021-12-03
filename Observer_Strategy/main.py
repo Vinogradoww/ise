@@ -118,7 +118,6 @@ if __name__ == "__main__":
 
     # strategy = StrategyEmailNotification()
     # strategy.recipients = ["nik-rostov@mail.ru"]
-    #
     # context = Context(strategy)
     # context.action()
 
