@@ -1,6 +1,5 @@
 from typing import List
 import requests
-import schedule
 import smtplib
 import time
 import os
@@ -63,11 +62,6 @@ class Weather:
         self.wind = data["wind"]['speed']
         self.notify()
 
-    def get_weather_periodically(self, step):
-        while True:
-            self.get_weather()
-            time.sleep(step)
-
     def attach(self, observer: WeatherNotification) -> None:
         print("Subject: Attached an observer.")
         self._observers.append(observer)
@@ -78,6 +72,11 @@ class Weather:
     def notify(self):
         for _observer in self._observers:
             _observer.update(self.temp, self.wind)
+
+    # def get_weather_periodically(self, step):
+    #     while True:
+    #         self.get_weather()
+    #         time.sleep(step)
 
 
 #################################################
@@ -113,11 +112,11 @@ class Context:
 
 
 if __name__ == "__main__":
-    context = Context(StrategyPrintToConsole())
-    context.action()
-
-    # strategy = StrategyEmailNotification()
-    # strategy.recipients = ["nik-rostov@mail.ru"]
-    # context = Context(strategy)
+    # context = Context(StrategyPrintToConsole())
     # context.action()
+
+    strategy = StrategyEmailNotification()
+    strategy.recipients = ["nik-rostov@mail.ru"]
+    context = Context(strategy)
+    context.action()
 
